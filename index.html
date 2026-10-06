@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Advanced Password Security Analyzer & Generator Suite - Evaluate password strength, Shannon entropy, breach history via HIBP k-Anonymity, character composition, and crack time estimates.">
+  <meta name="keywords" content="password security analyzer, password strength checker, hibp breach checker, shannon entropy, cybersecurity, password generator">
+  <title>CyberShield - Advanced Password Security & Breach Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>CyberShield Security Suite</h1>
+          <p>Real-Time Password Strength Engine & Breach Diagnostics</p>
+        </div>
+      </div>
+      <div class="badge-privacy">
+        <span class="pulse-dot"></span>
+        <span>100% Client-Side Privacy (k-Anonymity)</span>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav" aria-label="Main Navigation">
+      <button class="tab-btn active" data-tab="tab-analyzer" id="nav-tab-analyzer">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Single Password Analyzer
+      </button>
+      <button class="tab-btn" data-tab="tab-generator" id="nav-tab-generator">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Password Generator Suite
+      </button>
+      <button class="tab-btn" data-tab="tab-batch" id="nav-tab-batch">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Batch Security Audit
+      </button>
+      <button class="tab-btn" data-tab="tab-guide" id="nav-tab-guide">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Best Practices & NIST Guide
+      </button>
+    </nav>
+
+    <main>
+      <!-- TAB 1: SINGLE PASSWORD ANALYZER -->
+      <section id="tab-analyzer" class="tab-content active">
+        <!-- Main Password Input Card -->
+        <div class="glass-card input-section">
+          <div class="input-label-row">
+            <label for="passwordInput" class="input-label">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              Enter Target Password for Real-Time Analysis:
+            </label>
+            <span class="subtext" style="font-size:0.8rem; color:var(--text-muted);">Never transmitted in plain text</span>
+          </div>
+          <div class="input-wrapper">
+            <input type="password" id="passwordInput" class="main-input mono" placeholder="Type or paste password here..." autocomplete="off" spellcheck="false" value="P@ssw0rd2024!">
+            <div class="input-actions">
+              <button id="toggleVisibilityBtn" class="icon-btn" title="Toggle Visibility" aria-label="Toggle Password Visibility">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+              <button id="generateRandomInputBtn" class="icon-btn" title="Generate Strong Sample Password" aria-label="Generate Random Sample Password">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              </button>
+              <button id="copyInputBtn" class="icon-btn" title="Copy Password" aria-label="Copy Password to Clipboard">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overview Dashboard Grid -->
+        <div class="grid-2" style="margin-bottom: 1.5rem;">
+          <!-- Score Gauge Card -->
+          <div class="glass-card">
+            <h3 style="font-size:1rem; margin-bottom:1.25rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Overall Fortification Score</h3>
+            <div class="score-overview">
+              <div class="score-gauge-container">
+                <svg class="score-gauge-svg" viewBox="0 0 160 160">
+                  <circle class="score-gauge-bg" cx="80" cy="80" r="70"></circle>
+                  <circle id="scoreGaugeMeter" class="score-gauge-meter" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="score-value-text">
+                  <div id="scoreNumberText" class="score-number mono">0</div>
+                  <div class="score-label">/ 100</div>
+                </div>
+              </div>
+              <div class="score-details">
+                <div id="ratingBadge" class="rating-badge">Analyzing...</div>
+                <p id="scoreSummary" class="score-summary">Calculating security evaluation matrix based on length, entropy, dictionary, and character pool size.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entropy & Stats Grid -->
+          <div class="glass-card grid-3">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Shannon Entropy</span>
+                <svg class="stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div id="entropyValue" class="stat-value mono">0.0 bits</div>
+              <div class="stat-subtext">Information randomness (H)</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Password Length</span>
+                <svg class="stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+              </div>
+              <div id="charLengthValue" class="stat-value mono">0</div>
+              <div class="stat-subtext">Total characters count</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Charset Pool</span>
+                <svg class="stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <div id="charsetPoolValue" class="stat-value mono">0 chars</div>
+              <div class="stat-subtext">Possible symbol space</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Character Composition & Crack Times Grid -->
+        <div class="grid-2" style="margin-bottom: 1.5rem;">
+          <!-- Character Composition Card -->
+          <div class="glass-card">
+            <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Character Composition Breakdown</h3>
+            <div class="comp-list">
+              <div class="comp-item">
+                <div class="comp-meta">
+                  <span>Lowercase Letters (a-z)</span>
+                  <span id="lowerCountText" class="mono">0 (0%)</span>
+                </div>
+                <div class="comp-bar-bg"><div id="lowerFill" class="comp-bar-fill"></div></div>
+              </div>
+
+              <div class="comp-item">
+                <div class="comp-meta">
+                  <span>Uppercase Letters (A-Z)</span>
+                  <span id="upperCountText" class="mono">0 (0%)</span>
+                </div>
+                <div class="comp-bar-bg"><div id="upperFill" class="comp-bar-fill"></div></div>
+              </div>
+
+              <div class="comp-item">
+                <div class="comp-meta">
+                  <span>Numbers (0-9)</span>
+                  <span id="numberCountText" class="mono">0 (0%)</span>
+                </div>
+                <div class="comp-bar-bg"><div id="numberFill" class="comp-bar-fill"></div></div>
+              </div>
+
+              <div class="comp-item">
+                <div class="comp-meta">
+                  <span>Special Symbols (!@#$)</span>
+                  <span id="symbolCountText" class="mono">0 (0%)</span>
+                </div>
+                <div class="comp-bar-bg"><div id="symbolFill" class="comp-bar-fill"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time-To-Crack Matrix -->
+          <div class="glass-card">
+            <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Estimated Crack Time Scenarios</h3>
+            <div class="crack-matrix">
+              <div class="crack-scenario">
+                <div class="scenario-title">Online Throttled</div>
+                <div id="timeOnlineThrottled" class="scenario-time mono">Instant</div>
+                <div class="scenario-speed">10 attempts / sec</div>
+              </div>
+
+              <div class="crack-scenario">
+                <div class="scenario-title">Online Unthrottled</div>
+                <div id="timeOnlineUnthrottled" class="scenario-time mono">Instant</div>
+                <div class="scenario-speed">100 attempts / sec</div>
+              </div>
+
+              <div class="crack-scenario">
+                <div class="scenario-title">Offline GPU Rig (Hashcat)</div>
+                <div id="timeGpuRig" class="scenario-time mono">Instant</div>
+                <div class="scenario-speed">100 Billion attempts / sec</div>
+              </div>
+
+              <div class="crack-scenario">
+                <div class="scenario-title">Quantum / Supercomputer</div>
+                <div id="timeQuantum" class="scenario-time mono">Instant</div>
+                <div class="scenario-speed">10 Trillion attempts / sec</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HIBP Breach Box & Pattern Vulnerabilities -->
+        <div class="glass-card" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Vulnerability & Pattern Diagnostics</h3>
+          <div id="alertList" class="alert-list">
+            <!-- Dynamic alerts inserted by JS -->
+          </div>
+
+          <div class="hibp-box">
+            <div class="hibp-info">
+              <h4>HaveIBeenPwned (HIBP) Breach Check</h4>
+              <p id="hibpDetails">Checking SHA-1 k-Anonymity hash prefix against 600M+ leaked records...</p>
+            </div>
+            <div id="hibpBadge" class="hibp-badge loading">Checking...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PASSWORD GENERATOR SUITE -->
+      <section id="tab-generator" class="tab-content">
+        <div class="grid-2">
+          <!-- Generator Config Panel -->
+          <div class="glass-card">
+            <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--accent-cyan);">Generator Controls</h3>
+            
+            <div style="display:flex; gap:1rem; margin-bottom:1.25rem;">
+              <label class="custom-checkbox" style="flex:1;">
+                <input type="radio" name="genMode" id="genModeRandom" checked>
+                <span>Random Character</span>
+              </label>
+              <label class="custom-checkbox" style="flex:1;">
+                <input type="radio" name="genMode" id="genModePassphrase">
+                <span>Cryptographic Passphrase</span>
+              </label>
+            </div>
+
+            <!-- Options for Random Generator -->
+            <div id="genOptionsRandom" class="gen-option-group">
+              <div class="range-container">
+                <div class="range-header">
+                  <span>Password Length:</span>
+                  <span id="genLengthVal" class="mono">16</span>
+                </div>
+                <input type="range" id="genLengthRange" min="8" max="64" value="16">
+              </div>
+
+              <div class="checkbox-grid">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genIncludeUpper" checked>
+                  <span>Uppercase (A-Z)</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genIncludeLower" checked>
+                  <span>Lowercase (a-z)</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genIncludeNumbers" checked>
+                  <span>Numbers (0-9)</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genIncludeSymbols" checked>
+                  <span>Symbols (!@#$)</span>
+                </label>
+              </div>
+
+              <label class="custom-checkbox" style="margin-top:0.5rem;">
+                <input type="checkbox" id="genAvoidAmbiguous">
+                <span>Avoid Ambiguous Characters (i, l, 1, L, o, 0, O)</span>
+              </label>
+            </div>
+
+            <!-- Options for Passphrase Generator -->
+            <div id="genOptionsPassphrase" class="gen-option-group" style="display:none;">
+              <div class="range-container">
+                <div class="range-header">
+                  <span>Word Count:</span>
+                  <span id="genWordCountVal" class="mono">4</span>
+                </div>
+                <input type="range" id="genWordCountRange" min="3" max="8" value="4">
+              </div>
+
+              <div class="checkbox-grid">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genIncludeNumberPassphrase" checked>
+                  <span>Append Random Number</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="genCapitalizePassphrase" checked>
+                  <span>Capitalize First Letters</span>
+                </label>
+              </div>
+
+              <div style="margin-top:0.75rem;">
+                <label class="input-label" style="font-size:0.85rem; margin-bottom:0.4rem;">Word Separator:</label>
+                <select id="genSeparatorSelect" class="main-input" style="padding:0.6rem 1rem; font-size:0.95rem;">
+                  <option value="-">Hyphen (-)</option>
+                  <option value="_">Underscore (_)</option>
+                  <option value=".">Period (.)</option>
+                  <option value=" ">Space ( )</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="generateNewBtn" class="btn-primary">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Generate Password
+            </button>
+          </div>
+
+          <!-- Generated Password Display Card -->
+          <div class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--text-main);">Generated Result</h3>
+              <div class="input-wrapper" style="margin-bottom:1rem;">
+                <input type="text" id="generatedPasswordDisplay" class="main-input mono" readonly style="font-size:1.25rem; color:var(--accent-cyan);">
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.9rem; color:var(--text-muted);">Estimated Strength:</span>
+                <span id="genScoreBadge" class="rating-badge" style="margin:0;">Calculating...</span>
+              </div>
+            </div>
+
+            <button id="copyGenBtn" class="btn-secondary" style="width:100%; margin-top:2rem;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Generated Password
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: BATCH SECURITY AUDIT -->
+      <section id="tab-batch" class="tab-content">
+        <div class="glass-card">
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem; color:var(--accent-cyan);">Batch Multi-Password Audit Engine</h3>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem;">Paste multiple passwords (one per line) or upload a text/CSV file to run an instant security audit on your credential lists.</p>
+
+          <textarea id="batchInput" class="batch-textarea" placeholder="Paste passwords here (one per line)...
+password123
+Admin2024!
+Correct-Horse-Battery-Staple-99
+qwertyuiop"></textarea>
+
+          <div class="action-bar">
+            <button id="runBatchBtn" class="btn-primary" style="flex:2; margin-top:0;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Run Batch Analysis
+            </button>
+            <button id="batchFileBtn" class="btn-secondary">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload File (.txt/.csv)
+            </button>
+            <input type="file" id="batchFileInput" accept=".txt,.csv" style="display:none;">
+            <button id="exportCsvBtn" class="btn-secondary">Export CSV</button>
+            <button id="exportJsonBtn" class="btn-secondary">Export JSON</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Masked Password</th>
+                  <th>Length</th>
+                  <th>Entropy</th>
+                  <th>Score</th>
+                  <th>Rating Tier</th>
+                  <th>Vulnerabilities</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center; color:var(--text-dim); padding:2rem;">No batch audit performed yet. Paste passwords and click "Run Batch Analysis".</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: BEST PRACTICES & GUIDE -->
+      <section id="tab-guide" class="tab-content">
+        <div class="grid-2">
+          <div class="glass-card guide-card">
+            <h3>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              NIST Special Publication 800-63B Guidelines
+            </h3>
+            <p>Modern cybersecurity standards have shifted away from complex character substitution rules toward length and entropy.</p>
+            <ul class="guide-list">
+              <li><strong>Prioritize Length:</strong> Passwords of 14+ characters are exponentially harder to brute-force than short complex passwords.</li>
+              <li><strong>Adopt Passphrases:</strong> 4 or 5 random words (e.g. <code>correct-horse-battery-staple</code>) provide huge entropy while remaining human-memorable.</li>
+              <li><strong>No Arbitrary Rotations:</strong> Changing passwords every 30-90 days encourages weak predictable variations (e.g. <code>Spring2024!</code> to <code>Summer2024!</code>). Only reset if breached.</li>
+              <li><strong>Check Against Leaks:</strong> Always screen new credentials against known breached password databases using k-Anonymity.</li>
+            </ul>
+          </div>
+
+          <div class="glass-card guide-card">
+            <h3>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Recommended Security Hygiene
+            </h3>
+            <p>Combine strong passwords with defence-in-depth measures:</p>
+            <ul class="guide-list">
+              <li><strong>Use a Dedicated Password Manager:</strong> Bitwarden, 1Password, or KeePassXC to store unique credentials.</li>
+              <li><strong>Enable Multi-Factor Authentication (MFA):</strong> Prefer FIDO2/WebAuthn hardware keys or TOTP authenticator apps over SMS.</li>
+              <li><strong>Never Reuse Credentials:</strong> Unique passwords for every single online account prevent credential stuffing attacks.</li>
+              <li><strong>Audit Accounts Regularly:</strong> Periodically run batch audits on saved vault credentials.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>CyberShield Password Security Analyzer Engine &copy; 2026 | Built for Cybersecurity Audits & Educational Analysis</p>
+    </footer>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="common-passwords.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
